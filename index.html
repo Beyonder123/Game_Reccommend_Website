@@ -4,93 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Random Game Recommender</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: #1a1a1a;
-            font-family: Arial, sans-serif;
-        }
-
-        .recommend-button {
-            padding: 20px 40px;
-            font-size: 2em;
-            background: #ff4757;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: transform 0.3s, background 0.3s;
-            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
-        }
-
-        .recommend-button:hover {
-            background: #ff6b81;
-            transform: scale(1.05);
-        }
-
-        .recommend-button:active {
-            transform: scale(0.95);
-        }
-
-        #result {
-            margin-top: 40px;
-            font-size: 1.5em;
-            color: white;
-            text-align: center;
-            min-height: 60px;
-            padding: 20px;
-            max-width: 600px;
-        }
-
-        .game-title {
-            color: #ffd700;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-    </style>
+    <link rel="Stylesheet" href="style.css">""
+   
 </head>
 <body>
     <button class="recommend-button" onclick="recommendGame()">Recommend Me a Game!</button>
     <div id="result"></div>
 
-    <script>
-        // Basic game list - we can expand this later
-        const games = [
-            "The Witcher 3: Wild Hunt",
-            "Red Dead Redemption 2",
-            "Stardew Valley",
-            "Hollow Knight",
-            "Celeste",
-            "Portal 2",
-            "Disco Elysium",
-            "Hades",
-            "God of War (2018)",
-            "The Legend of Zelda: Breath of the Wild",
-            "Elden Ring",
-            "Minecraft",
-            "Undertale",
-            "Dark Souls III",
-            "Super Mario Odyssey"
-        ];
+    <script src="script.js"></script>
 
-        function recommendGame() {
-            const resultDiv = document.getElementById('result');
-            // Clear previous result with fade effect
-            resultDiv.style.opacity = '0';
-            
-            setTimeout(() => {
-                const randomIndex = Math.floor(Math.random() * games.length);
-                const selectedGame = games[randomIndex];
-                resultDiv.innerHTML = `How about...<br><span class="game-title">${selectedGame}</span>`;
-                resultDiv.style.opacity = '1';
-            }, 300);
-        }
-    </script>
 </body>
 </html>
+
