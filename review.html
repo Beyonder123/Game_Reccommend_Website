@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Review</title>
+    <link rel="stylesheet" href="review.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="review-container">
+        <h1>Review for <span id="gameTitle" style="color: #ffd700;"></span></h1>
+        <form id="reviewForm">
+            <!-- Question 1 -->
+            <div class="question-card">
+                <h3>1. So, how did you enjoy the game overall?</h3>
+                <div class="rating-stars" data-question="q1">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+            </div>
+        
+            <!-- Question 2 -->
+            <div class="question-card">
+                <h3>2. How would you rate the storyline/narrative?</h3>
+                <div class="rating-stars" data-question="q2">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+            </div>
+        
+            <!-- Question 3 -->
+            <div class="question-card">
+                <h3>3. How satisfying were the gameplay mechanics?</h3>
+                <div class="rating-stars" data-question="q3">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+            </div>
+        
+            <!-- Question 4 -->
+            <div class="question-card">
+                <h3>4. How impressive were the graphics/visuals?</h3>
+                <div class="rating-stars" data-question="q4">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+            </div>
+        
+            <!-- Question 5 -->
+            <div class="question-card">
+                <h3>5. How much replay value does it have?</h3>
+                <div class="rating-stars" data-question="q5">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+            </div>
+        
+            <!-- Question 6 -->
+            <div class="question-card">
+                <h3>6. How good was the soundtrack/sound design?</h3>
+                <div class="rating-stars" data-question="q6">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+            </div>
+        
+            <!-- Question 7 -->
+            <div class="question-card">
+                <h3>7. How well-balanced was the difficulty?</h3>
+                <div class="rating-stars" data-question="q7">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+            </div>
+        
+            <!-- Additional Comments -->
+            <div class="question-card">
+                <h3>Any additional comments?</h3>
+                <textarea id="comments" rows="4" placeholder="Share your thoughts..."></textarea>
+            </div>
+        
+            <button type="submit" class="submit-btn">Submit Review</button>
+        </form>
+    </div>
+    <script src="review.js"></script>
+</body>
+</html>

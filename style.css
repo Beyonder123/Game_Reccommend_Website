@@ -46,3 +46,11 @@ body {
     font-weight: bold;
     font-size: 1.2em;
 }
+
+.review-link {
+    color: #6c5ce7;
+    text-decoration: none;
+    margin-top: 20px;
+    display: inline-block;
+    font-size: 1.1em;
+}
