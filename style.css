@@ -1,0 +1,48 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #1a1a1a;
+    font-family: Arial, sans-serif;
+}
+
+.recommend-button {
+    padding: 20px 40px;
+    font-size: 2em;
+    background: #ff4757;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.3s, background 0.3s;
+    box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+}
+
+.recommend-button:hover {
+    background: #ff6b81;
+    transform: scale(1.05);
+}
+
+.recommend-button:active {
+    transform: scale(0.95);
+}
+
+#result {
+    margin-top: 40px;
+    font-size: 1.5em;
+    color: white;
+    text-align: center;
+    min-height: 60px;
+    padding: 20px;
+    max-width: 600px;
+}
+
+.game-title {
+    color: #ffd700;
+    font-weight: bold;
+    font-size: 1.2em;
+}
