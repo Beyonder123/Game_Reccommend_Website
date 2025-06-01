@@ -1,7 +1,6 @@
 // Get game title from URL parameters
 const urlParams = new URLSearchParams(window.location.search);
 const gameTitle = decodeURIComponent(urlParams.get('game'));
-document.getElementById('gameTitle').textContent = gameTitle || 'Unknown Game';
 
 // Display the game title
 if (gameTitle) {
@@ -21,19 +20,40 @@ let ratings = {
     q7: 0  // Difficulty Balance
 };
 
-// Star rating interaction
-document.querySelectorAll('.star').forEach(star => {
-    star.addEventListener('click', function() {
-        const question = this.parentElement.dataset.question;
-        const value = parseInt(this.dataset.value);
-        
-        // Update visual state
-        this.parentElement.querySelectorAll('.star').forEach((s, index) => {
-            s.classList.toggle('active', index < value);
-        });
+// Progress tracking
+function updateProgress() {
+    const totalQuestions = 7; // Not counting comments
+    const answeredQuestions = Object.values(ratings).filter(rating => rating > 0).length;
+    const progressPercentage = (answeredQuestions / totalQuestions) * 100;
+    
+    document.getElementById('progressIndicator').style.width = `${progressPercentage}%`;
+}
 
-        // Store rating
-        ratings[question] = value;
+// Star rating interaction
+document.querySelectorAll('.rating-stars').forEach(ratingGroup => {
+    ratingGroup.querySelectorAll('.star').forEach(star => {
+        star.addEventListener('click', function() {
+            const question = this.parentElement.dataset.question;
+            const value = parseInt(this.dataset.value);
+            
+            // Update visual state
+            this.parentElement.querySelectorAll('.star').forEach((s, index) => {
+                s.classList.toggle('active', index < value);
+            });
+
+            // Store rating
+            ratings[question] = value;
+            
+            // Update progress
+            updateProgress();
+            
+            // Add animation effect
+            const card = this.closest('.question-card');
+            card.classList.add('rated');
+            setTimeout(() => {
+                card.classList.remove('rated');
+            }, 500);
+        });
     });
 });
 
@@ -42,8 +62,23 @@ document.getElementById('reviewForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
     // Validate all ratings
-    if (Object.values(ratings).some(rating => rating === 0)) {
-        alert('Please answer all questions before submitting!');
+    const unansweredQuestions = Object.entries(ratings)
+        .filter(([key, value]) => value === 0)
+        .map(([key]) => key.replace('q', ''));
+    
+    if (unansweredQuestions.length > 0) {
+        // Highlight unanswered questions
+        document.querySelectorAll('.question-card').forEach(card => {
+            const questionNumber = card.dataset.question;
+            if (unansweredQuestions.includes(questionNumber)) {
+                card.classList.add('unanswered');
+                setTimeout(() => {
+                    card.classList.remove('unanswered');
+                }, 2000);
+            }
+        });
+        
+        alert(`Please answer all questions before submitting! Missing questions: ${unansweredQuestions.join(', ')}`);
         return;
     }
 
@@ -58,8 +93,14 @@ document.getElementById('reviewForm').addEventListener('submit', function(e) {
     // Save to Excel
     saveToExcel(review);
     
-    alert('Thank you for your review!');
-    window.location.href = 'index.html';
+    // Show success message with animation
+    const submitBtn = document.querySelector('.submit-btn');
+    submitBtn.innerHTML = '<i class="fas fa-check"></i> Review Submitted!';
+    submitBtn.style.backgroundColor = '#4CAF50';
+    
+    setTimeout(() => {
+        window.location.href = 'index.html';
+    }, 1500);
 });
 
 function saveToExcel(review) {
@@ -90,3 +131,31 @@ function downloadReviews() {
     link.download = 'game_reviews.xlsx';
     link.click();
 }
+
+// Add CSS for animations
+const style = document.createElement('style');
+style.textContent = `
+    .question-card.rated {
+        background: rgba(108, 92, 231, 0.1);
+        transition: background 0.5s ease;
+    }
+    
+    .question-card.unanswered {
+        animation: shake 0.5s ease-in-out, highlight 2s ease;
+    }
+    
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        20%, 60% { transform: translateX(-5px); }
+        40%, 80% { transform: translateX(5px); }
+    }
+    
+    @keyframes highlight {
+        0%, 100% { background: rgba(255,255,255,0.05); }
+        50% { background: rgba(255, 71, 87, 0.2); }
+    }
+`;
+document.head.appendChild(style);
+
+// Initialize progress
+updateProgress();

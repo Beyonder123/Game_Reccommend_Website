@@ -3,17 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Get random game recommendations and share your reviews">
     <title>Random Game Recommender</title>
-    <link rel="Stylesheet" href="style.css">""
-   
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <button class="recommend-button" onclick="recommendGame()">Recommend Me a Game!</button>
-    <div id="result"></div>
+    <header>
+        <h1 class="site-title">Game Recommender</h1>
+        <p class="subtitle">Discover your next gaming adventure</p>
+    </header>
+
+    <main>
+        <div class="game-counter">Our database contains <span id="gameCount">0</span> awesome games</div>
+        <button id="recommendButton" class="recommend-button" onclick="recommendGame()">Recommend Me a Game!</button>
+        <div id="result" class="result-container"></div>
+        <a id="reviewLink" href="review.html" class="review-link">Review this game <i class="fas fa-star"></i></a>
+    </main>
+
+    <footer>
+        <p>© 2023 Game Recommender | <a href="#" class="footer-link">About</a> | <a href="#" class="footer-link">Contact</a></p>
+    </footer>
 
     <script src="script.js"></script>
-    <a id="reviewLink" href="review.html" class="review-link">Review this game</a>
-
 </body>
 </html>
 

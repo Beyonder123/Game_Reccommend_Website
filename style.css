@@ -1,56 +1,223 @@
 body {
     margin: 0;
     padding: 0;
-    height: 100vh;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    background-size: 200% 200%;
+    animation: gradientAnimation 15s ease infinite;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+}
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+header {
+    text-align: center;
+    padding: 2rem 1rem;
+    background-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.site-title {
+    margin: 0;
+    font-size: 2.5rem;
+    color: #ff4757;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.subtitle {
+    margin: 0.5rem 0 0;
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+main {
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: #1a1a1a;
-    font-family: Arial, sans-serif;
+    padding: 2rem;
+}
+
+.game-counter {
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    color: #ddd;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#gameCount {
+    color: #ff4757;
+    font-weight: bold;
 }
 
 .recommend-button {
     padding: 20px 40px;
-    font-size: 2em;
+    font-size: 1.8rem;
     background: #ff4757;
     color: white;
     border: none;
     border-radius: 50px;
     cursor: pointer;
-    transition: transform 0.3s, background 0.3s;
+    transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
     box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+    font-weight: bold;
+    position: relative;
+    overflow: hidden;
+}
+
+.recommend-button:before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(45deg);
+    transition: transform 0.6s;
+    z-index: 1;
+    opacity: 0;
 }
 
 .recommend-button:hover {
     background: #ff6b81;
     transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(255, 71, 87, 0.6);
+}
+
+.recommend-button:hover:before {
+    opacity: 1;
+    transform: rotate(45deg) translateY(100%);
 }
 
 .recommend-button:active {
     transform: scale(0.95);
 }
 
-#result {
+.result-container {
     margin-top: 40px;
-    font-size: 1.5em;
+    font-size: 1.5rem;
     color: white;
     text-align: center;
     min-height: 60px;
     padding: 20px;
     max-width: 600px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.fade-out {
+    opacity: 0;
+    transform: translateY(-10px);
 }
 
 .game-title {
     color: #ffd700;
     font-weight: bold;
-    font-size: 1.2em;
+    font-size: 1.3rem;
+    display: block;
+    margin-top: 0.5rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .review-link {
     color: #6c5ce7;
     text-decoration: none;
-    margin-top: 20px;
+    margin-top: 2rem;
     display: inline-block;
-    font-size: 1.1em;
+    font-size: 1.1rem;
+    padding: 0.8rem 1.5rem;
+    background-color: rgba(108, 92, 231, 0.1);
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(108, 92, 231, 0.3);
+}
+
+.review-link:hover {
+    background-color: rgba(108, 92, 231, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.review-link i {
+    margin-left: 5px;
+    color: #ffd700;
+}
+
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: rgba(0, 0, 0, 0.4);
+    font-size: 0.9rem;
+}
+
+.footer-link {
+    color: #ff4757;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-link:hover {
+    color: #ff6b81;
+    text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .site-title {
+        font-size: 2rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    .recommend-button {
+        padding: 15px 30px;
+        font-size: 1.5rem;
+    }
+    
+    .result-container {
+        font-size: 1.3rem;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 1.5rem 1rem;
+    }
+    
+    .site-title {
+        font-size: 1.8rem;
+    }
+    
+    .recommend-button {
+        padding: 12px 25px;
+        font-size: 1.3rem;
+    }
+    
+    .result-container {
+        font-size: 1.1rem;
+        padding: 12px;
+        margin-top: 30px;
+    }
+    
+    .review-link {
+        font-size: 1rem;
+        padding: 0.6rem 1.2rem;
+    }
 }

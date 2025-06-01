@@ -29,17 +29,31 @@ const games = [
 // DOM elements
 const recommendButton = document.getElementById('recommendButton');
 const resultDiv = document.getElementById('result');
+const gameCountElement = document.getElementById('gameCount');
+
+// Display game count
+gameCountElement.textContent = games.length;
 
 // Track last recommended game
 let lastRecommendedGame = null;
 let currentRecommendedGame = null; 
 
-// Event listener
-recommendButton.addEventListener('click', recommendGame);
+// Initialize review link visibility
+document.getElementById('reviewLink').style.display = 'none';
 
+// Function to recommend a game
 function recommendGame() {
+    // Show result container if hidden
+    resultDiv.style.display = 'block';
+    
     // Add fade-out effect
     resultDiv.classList.add('fade-out');
+    
+    // Add button animation
+    recommendButton.classList.add('button-clicked');
+    setTimeout(() => {
+        recommendButton.classList.remove('button-clicked');
+    }, 300);
     
     setTimeout(() => {
         let selectedGame;
@@ -59,8 +73,8 @@ function recommendGame() {
         lastRecommendedGame = selectedGame;
         currentRecommendedGame = selectedGame; // Store the current recommendation
 
-        // Update display
-        resultDiv.innerHTML = `How about...<br><span class="game-title">${selectedGame}</span>`;
+        // Update display with animation
+        resultDiv.innerHTML = `<div class="result-animation">How about...</div><span class="game-title">${selectedGame}</span>`;
         resultDiv.classList.remove('fade-out');
 
         // Update review link
@@ -69,3 +83,13 @@ function recommendGame() {
         reviewLink.style.display = 'inline-block';
     }, 300);
 }
+
+// Add event listener for keyboard navigation (press Enter to recommend)
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter' && !event.ctrlKey && !event.altKey) {
+        recommendGame();
+    }
+});
+
+// Initialize with hidden result container
+resultDiv.style.display = 'none';
