@@ -1,223 +1,209 @@
+/* General Styles */
 body {
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    line-height: 1.6;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-    background-size: 200% 200%;
-    animation: gradientAnimation 15s ease infinite;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: white;
-}
-
-@keyframes gradientAnimation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    min-height: 100vh;
+    overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 header {
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 1rem 0;
     text-align: center;
-    padding: 2rem 1rem;
-    background-color: rgba(0, 0, 0, 0.3);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
-.site-title {
+header h1 {
     margin: 0;
-    font-size: 2.5rem;
-    color: #ff4757;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-size: 2.5em;
+    letter-spacing: 2px;
 }
 
-.subtitle {
-    margin: 0.5rem 0 0;
-    font-size: 1.2rem;
-    opacity: 0.8;
+header nav a {
+    color: #fff;
+    margin: 0 15px;
+    text-decoration: none;
+    font-size: 1.1em;
+    transition: color 0.3s ease;
+}
+
+header nav a:hover {
+    color: #764ba2; /* Accent color */
 }
 
 main {
     flex: 1;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
+    padding: 20px;
+    text-align: center;
 }
 
-.game-counter {
-    margin-bottom: 2rem;
-    font-size: 1.1rem;
-    color: #ddd;
-    background-color: rgba(0, 0, 0, 0.2);
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+#recommender {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    max-width: 600px;
+    width: 100%;
+}
+
+#recommender h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+#recommender p {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}
+
+.recommend-btn {
+    background-color: #ff6b6b; /* Vibrant button color */
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.recommend-btn:hover {
+    background-color: #ff4757;
+    transform: translateY(-2px);
+}
+
+.recommend-btn:active {
+    transform: translateY(1px);
 }
 
 #gameCount {
-    color: #ff4757;
-    font-weight: bold;
-}
-
-.recommend-button {
-    padding: 20px 40px;
-    font-size: 1.8rem;
-    background: #ff4757;
-    color: white;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
-    box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
-    font-weight: bold;
-    position: relative;
-    overflow: hidden;
-}
-
-.recommend-button:before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: rgba(255, 255, 255, 0.1);
-    transform: rotate(45deg);
-    transition: transform 0.6s;
-    z-index: 1;
-    opacity: 0;
-}
-
-.recommend-button:hover {
-    background: #ff6b81;
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(255, 71, 87, 0.6);
-}
-
-.recommend-button:hover:before {
-    opacity: 1;
-    transform: rotate(45deg) translateY(100%);
-}
-
-.recommend-button:active {
-    transform: scale(0.95);
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #eee;
 }
 
 .result-container {
-    margin-top: 40px;
-    font-size: 1.5rem;
-    color: white;
-    text-align: center;
-    min-height: 60px;
+    margin-top: 30px;
     padding: 20px;
-    max-width: 600px;
-    background-color: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.3);
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: opacity 0.3s, transform 0.3s;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
-.fade-out {
-    opacity: 0;
-    transform: translateY(-10px);
+.result-container h3 {
+    margin-top: 0;
+    font-size: 1.5em;
 }
 
-.game-title {
-    color: #ffd700;
+#gameTitle {
+    font-size: 1.8em;
     font-weight: bold;
-    font-size: 1.3rem;
-    display: block;
-    margin-top: 0.5rem;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    color: #ffcb6b; /* Highlight color for game title */
+    margin: 10px 0;
+    animation: pulse 1.5s infinite;
 }
 
-.review-link {
-    color: #6c5ce7;
-    text-decoration: none;
-    margin-top: 2rem;
+#reviewLink {
     display: inline-block;
-    font-size: 1.1rem;
-    padding: 0.8rem 1.5rem;
-    background-color: rgba(108, 92, 231, 0.1);
-    border-radius: 30px;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(108, 92, 231, 0.3);
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #4CAF50; /* Green for review link */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
-.review-link:hover {
-    background-color: rgba(108, 92, 231, 0.2);
-    transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.review-link i {
-    margin-left: 5px;
-    color: #ffd700;
+#reviewLink:hover {
+    background-color: #45a049;
 }
 
 footer {
+    background: rgba(0, 0, 0, 0.7);
+    color: #aaa;
     text-align: center;
-    padding: 1.5rem;
-    background-color: rgba(0, 0, 0, 0.4);
-    font-size: 0.9rem;
+    padding: 1rem 0;
+    font-size: 0.9em;
 }
 
-.footer-link {
-    color: #ff4757;
-    text-decoration: none;
-    transition: color 0.3s;
+.social-links a {
+    color: #aaa;
+    margin: 0 10px;
+    font-size: 1.5em;
+    transition: color 0.3s ease;
 }
 
-.footer-link:hover {
-    color: #ff6b81;
-    text-decoration: underline;
+.social-links a:hover {
+    color: #fff;
 }
 
-/* Responsive adjustments */
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-    .site-title {
-        font-size: 2rem;
+    header h1 {
+        font-size: 2em;
     }
-    
-    .subtitle {
-        font-size: 1rem;
+    header nav a {
+        font-size: 1em;
+        margin: 0 10px;
     }
-    
-    .recommend-button {
-        padding: 15px 30px;
-        font-size: 1.5rem;
+    #recommender {
+        padding: 20px;
     }
-    
-    .result-container {
-        font-size: 1.3rem;
-        padding: 15px;
+    .recommend-btn {
+        padding: 12px 25px;
+        font-size: 1.1em;
+    }
+    #gameTitle {
+        font-size: 1.5em;
     }
 }
 
 @media (max-width: 480px) {
-    header {
-        padding: 1.5rem 1rem;
+    header h1 {
+        font-size: 1.8em;
     }
-    
-    .site-title {
-        font-size: 1.8rem;
+    header nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
-    
-    .recommend-button {
-        padding: 12px 25px;
-        font-size: 1.3rem;
+    header nav a {
+        margin: 5px 0;
     }
-    
-    .result-container {
-        font-size: 1.1rem;
-        padding: 12px;
-        margin-top: 30px;
+    #recommender h2 {
+        font-size: 1.5em;
     }
-    
-    .review-link {
-        font-size: 1rem;
-        padding: 0.6rem 1.2rem;
+    #recommender p {
+        font-size: 1em;
+    }
+    .recommend-btn {
+        width: 100%;
+        padding: 15px;
     }
 }

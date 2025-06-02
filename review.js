@@ -1,161 +1,169 @@
-// Get game title from URL parameters
-const urlParams = new URLSearchParams(window.location.search);
-const gameTitle = decodeURIComponent(urlParams.get('game'));
+document.addEventListener('DOMContentLoaded', () => {
+    const gameTitleSpan = document.querySelector('#gameToReview span');
+    const reviewForm = document.getElementById('reviewForm');
+    const starsContainers = document.querySelectorAll('.stars');
+    const progressBar = document.getElementById('progressBar');
+    const submitBtn = document.getElementById('submitReviewBtn');
 
-// Display the game title
-if (gameTitle) {
-    document.getElementById('gameTitle').textContent = gameTitle;
-} else {
-    document.getElementById('gameTitle').textContent = 'the recommended game';
-}
+    let ratings = {
+        enjoyment: 0,
+        storyline: 0,
+        gameplay: 0,
+        graphics: 0,
+        replayValue: 0,
+        sound: 0,
+        difficulty: 0
+    };
+    const totalQuestions = Object.keys(ratings).length;
 
-// Initialize ratings object
-let ratings = {
-    q1: 0, // Overall enjoyment
-    q2: 0, // Storyline
-    q3: 0, // Gameplay
-    q4: 0, // Graphics
-    q5: 0, // Replayability
-    q6: 0, // Sound/Music
-    q7: 0  // Difficulty Balance
-};
+    // Get game title from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const gameName = urlParams.get('game');
+    if (gameName && gameTitleSpan) {
+        gameTitleSpan.textContent = decodeURIComponent(gameName);
+    } else if (gameTitleSpan) {
+        gameTitleSpan.textContent = "Game Title Not Found";
+    }
 
-// Progress tracking
-function updateProgress() {
-    const totalQuestions = 7; // Not counting comments
-    const answeredQuestions = Object.values(ratings).filter(rating => rating > 0).length;
-    const progressPercentage = (answeredQuestions / totalQuestions) * 100;
-    
-    document.getElementById('progressIndicator').style.width = `${progressPercentage}%`;
-}
+    function updateProgress() {
+        const answeredQuestions = Object.values(ratings).filter(rating => rating > 0).length;
+        const progressPercentage = (answeredQuestions / totalQuestions) * 100;
+        if (progressBar) {
+            progressBar.style.width = `${progressPercentage}%`;
+            progressBar.textContent = `${Math.round(progressPercentage)}%`;
+        }
+    }
 
-// Star rating interaction
-document.querySelectorAll('.rating-stars').forEach(ratingGroup => {
-    ratingGroup.querySelectorAll('.star').forEach(star => {
-        star.addEventListener('click', function() {
-            const question = this.parentElement.dataset.question;
-            const value = parseInt(this.dataset.value);
-            
-            // Update visual state
-            this.parentElement.querySelectorAll('.star').forEach((s, index) => {
-                s.classList.toggle('active', index < value);
+    starsContainers.forEach(container => {
+        const question = container.dataset.question;
+        const stars = container.querySelectorAll('span');
+        const questionCard = container.closest('.question-card');
+
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                ratings[question] = parseInt(star.dataset.value);
+                stars.forEach(s => {
+                    s.classList.toggle('active', parseInt(s.dataset.value) <= ratings[question]);
+                });
+                if (questionCard) {
+                    questionCard.classList.remove('unanswered');
+                    questionCard.classList.add('rated');
+                }
+                updateProgress();
             });
 
-            // Store rating
-            ratings[question] = value;
-            
-            // Update progress
-            updateProgress();
-            
-            // Add animation effect
-            const card = this.closest('.question-card');
-            card.classList.add('rated');
-            setTimeout(() => {
-                card.classList.remove('rated');
-            }, 500);
+            star.addEventListener('mouseover', () => {
+                const hoverValue = parseInt(star.dataset.value);
+                stars.forEach(s => {
+                    s.style.color = parseInt(s.dataset.value) <= hoverValue ? '#ffc107' : '#ddd';
+                });
+            });
+
+            container.addEventListener('mouseout', () => {
+                stars.forEach(s => {
+                    s.style.color = parseInt(s.dataset.value) <= ratings[question] ? '#ffc107' : '#ddd';
+                });
+            });
         });
     });
-});
 
-// Form submission
-document.getElementById('reviewForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // Validate all ratings
-    const unansweredQuestions = Object.entries(ratings)
-        .filter(([key, value]) => value === 0)
-        .map(([key]) => key.replace('q', ''));
-    
-    if (unansweredQuestions.length > 0) {
-        // Highlight unanswered questions
-        document.querySelectorAll('.question-card').forEach(card => {
-            const questionNumber = card.dataset.question;
-            if (unansweredQuestions.includes(questionNumber)) {
-                card.classList.add('unanswered');
-                setTimeout(() => {
-                    card.classList.remove('unanswered');
-                }, 2000);
+    if (reviewForm) {
+        reviewForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            let allAnswered = true;
+
+            // Check star ratings
+            for (const question in ratings) {
+                const card = document.getElementById(`card-${question}`);
+                if (ratings[question] === 0) {
+                    allAnswered = false;
+                    if (card) {
+                        card.classList.add('unanswered');
+                        card.classList.remove('rated');
+                    }
+                } else {
+                    if (card) {
+                        card.classList.remove('unanswered');
+                        card.classList.add('rated');
+                    }
+                }
             }
-        });
+
+            if (!allAnswered) {
+                alert('Please rate all aspects before submitting.');
+                return;
+            }
+
+            const comments = document.getElementById('comments').value;
+            const reviewData = {
+                game: gameName || 'Unknown Game',
+                timestamp: new Date().toISOString(),
+                ratings: ratings,
+                comments: comments
+            };
+
+            console.log('Review Data:', reviewData);
+            saveReviewToExcel(reviewData);
+
+            if (submitBtn) {
+                submitBtn.classList.add('success-animation');
+                submitBtn.innerHTML = '<i class="fas fa-check"></i> Submitted!';
+                setTimeout(() => {
+                    submitBtn.classList.remove('success-animation');
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Review';
+                    alert('Review submitted successfully! (Data saved to LocalStorage and logged to console)');
+                    // Optionally, redirect or clear form
+                    // window.location.href = 'index.html'; 
+                }, 2000);
+        }});
+    }
+
+    function saveReviewToExcel(review) {
+        const filename = 'game_reviews.xlsx';
+        let data = [];
+        try {
+            const existingData = localStorage.getItem('gameReviewsExcel');
+            if (existingData) {
+                const workbook = XLSX.read(existingData, {type: 'base64'});
+                const sheetName = workbook.SheetNames[0];
+                data = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+            }
+        } catch (e) {
+            console.error("Error reading existing review data from localStorage:", e);
+        }
+
+        const newReviewEntry = {
+            'Game Title': review.game,
+            'Timestamp': review.timestamp,
+            'Overall Enjoyment': review.ratings.enjoyment,
+            'Storyline/Narrative': review.ratings.storyline,
+            'Gameplay Mechanics': review.ratings.gameplay,
+            'Graphics & Visuals': review.ratings.graphics,
+            'Replay Value': review.ratings.replayValue,
+            'Sound & Music': review.ratings.sound,
+            'Difficulty Balance': review.ratings.difficulty,
+            'Additional Comments': review.comments
+        };
+        data.push(newReviewEntry);
+
+        const worksheet = XLSX.utils.json_to_sheet(data);
+        const newWorkbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(newWorkbook, worksheet, 'Reviews');
         
-        alert(`Please answer all questions before submitting! Missing questions: ${unansweredQuestions.join(', ')}`);
-        return;
+        try {
+            // Save to localStorage as base64 string
+            const excelBase64 = XLSX.write(newWorkbook, { bookType: 'xlsx', type: 'base64' });
+            localStorage.setItem('gameReviewsExcel', excelBase64);
+            console.log('Review saved to localStorage.');
+
+            // Optional: Trigger download (might be blocked by pop-up blockers if not user-initiated)
+            // XLSX.writeFile(newWorkbook, filename);
+        } catch (e) {
+            console.error("Error saving review data to localStorage:", e);
+            alert("Could not save review data to localStorage. See console for details.");
+        }
     }
 
-    // Create review object
-    const review = {
-        game: gameTitle,
-        date: new Date().toISOString(),
-        ...ratings,
-        comments: document.getElementById('comments').value
-    };
-
-    // Save to Excel
-    saveToExcel(review);
-    
-    // Show success message with animation
-    const submitBtn = document.querySelector('.submit-btn');
-    submitBtn.innerHTML = '<i class="fas fa-check"></i> Review Submitted!';
-    submitBtn.style.backgroundColor = '#4CAF50';
-    
-    setTimeout(() => {
-        window.location.href = 'index.html';
-    }, 1500);
+    // Initial progress update
+    updateProgress();
 });
-
-function saveToExcel(review) {
-    // Try to read existing data
-    let workbook;
-    try {
-        const existingData = localStorage.getItem('reviews');
-        workbook = XLSX.read(existingData, {type: 'string'});
-    } catch {
-        workbook = XLSX.utils.book_new();
-        const ws = XLSX.utils.json_to_sheet([review]);
-        XLSX.utils.book_append_sheet(workbook, ws, 'Reviews');
-    }
-
-    // Add new review
-    XLSX.utils.sheet_add_json(workbook.Sheets['Reviews'], [review], {skipHeader: true, origin: -1});
-
-    // Save updated data
-    const wbout = XLSX.write(workbook, {bookType: 'xlsx', type: 'array'});
-    localStorage.setItem('reviews', XLSX.write(workbook, {type: 'string'}));
-}
-
-function downloadReviews() {
-    const data = localStorage.getItem('reviews');
-    const blob = new Blob([data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'game_reviews.xlsx';
-    link.click();
-}
-
-// Add CSS for animations
-const style = document.createElement('style');
-style.textContent = `
-    .question-card.rated {
-        background: rgba(108, 92, 231, 0.1);
-        transition: background 0.5s ease;
-    }
-    
-    .question-card.unanswered {
-        animation: shake 0.5s ease-in-out, highlight 2s ease;
-    }
-    
-    @keyframes shake {
-        0%, 100% { transform: translateX(0); }
-        20%, 60% { transform: translateX(-5px); }
-        40%, 80% { transform: translateX(5px); }
-    }
-    
-    @keyframes highlight {
-        0%, 100% { background: rgba(255,255,255,0.05); }
-        50% { background: rgba(255, 71, 87, 0.2); }
-    }
-`;
-document.head.appendChild(style);
-
-// Initialize progress
-updateProgress();

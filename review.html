@@ -3,131 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Review your recommended games and share your thoughts">
-    <title>Game Review</title>
+    <meta name="description" content="Submit your review for the recommended game. Rate various aspects and leave your comments.">
+    <meta name="keywords" content="game review, submit review, rate game, game feedback">
+    <title>Review Game</title>
     <link rel="stylesheet" href="review.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
-        <a href="index.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Recommendations</a>
-        <h1>Review for <span id="gameTitle"></span></h1>
+        <h1>Game Review</h1>
+        <nav>
+            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            <a href="portfolio.html"><i class="fas fa-briefcase"></i> My Portfolio</a>
+        </nav>
+        <button id="backBtn" onclick="window.history.back()"><i class="fas fa-arrow-left"></i> Back</button>
     </header>
 
-    <div class="review-container">
+    <main>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <h2 id="gameToReview">Reviewing: <span>Game Title</span></h2>
+        
         <form id="reviewForm">
-            <div class="progress-bar">
-                <div class="progress-indicator" id="progressIndicator"></div>
+            <div class="review-container">
+                <div class="question-card" id="card-enjoyment">
+                    <label for="enjoyment">1. Overall Enjoyment:</label>
+                    <div class="stars" data-question="enjoyment">
+                        <span data-value="1">&#9733;</span><span data-value="2">&#9733;</span><span data-value="3">&#9733;</span><span data-value="4">&#9733;</span><span data-value="5">&#9733;</span><span data-value="6">&#9733;</span><span data-value="7">&#9733;</span>
+                    </div>
+                </div>
+
+                <div class="question-card" id="card-storyline">
+                    <label for="storyline">2. Storyline/Narrative (if applicable):</label>
+                    <div class="stars" data-question="storyline">
+                        <span data-value="1">&#9733;</span><span data-value="2">&#9733;</span><span data-value="3">&#9733;</span><span data-value="4">&#9733;</span><span data-value="5">&#9733;</span><span data-value="6">&#9733;</span><span data-value="7">&#9733;</span>
+                    </div>
+                </div>
+
+                <div class="question-card" id="card-gameplay">
+                    <label for="gameplay">3. Gameplay Mechanics:</label>
+                    <div class="stars" data-question="gameplay">
+                        <span data-value="1">&#9733;</span><span data-value="2">&#9733;</span><span data-value="3">&#9733;</span><span data-value="4">&#9733;</span><span data-value="5">&#9733;</span><span data-value="6">&#9733;</span><span data-value="7">&#9733;</span>
+                    </div>
+                </div>
+
+                <div class="question-card" id="card-graphics">
+                    <label for="graphics">4. Graphics & Visuals:</label>
+                    <div class="stars" data-question="graphics">
+                        <span data-value="1">&#9733;</span><span data-value="2">&#9733;</span><span data-value="3">&#9733;</span><span data-value="4">&#9733;</span><span data-value="5">&#9733;</span><span data-value="6">&#9733;</span><span data-value="7">&#9733;</span>
+                    </div>
+                </div>
+
+                <div class="question-card" id="card-replayValue">
+                    <label for="replayValue">5. Replay Value:</label>
+                    <div class="stars" data-question="replayValue">
+                        <span data-value="1">&#9733;</span><span data-value="2">&#9733;</span><span data-value="3">&#9733;</span><span data-value="4">&#9733;</span><span data-value="5">&#9733;</span><span data-value="6">&#9733;</span><span data-value="7">&#9733;</span>
+                    </div>
+                </div>
+
+                <div class="question-card" id="card-sound">
+                    <label for="sound">6. Sound & Music:</label>
+                    <div class="stars" data-question="sound">
+                        <span data-value="1">&#9733;</span><span data-value="2">&#9733;</span><span data-value="3">&#9733;</span><span data-value="4">&#9733;</span><span data-value="5">&#9733;</span><span data-value="6">&#9733;</span><span data-value="7">&#9733;</span>
+                    </div>
+                </div>
+
+                <div class="question-card" id="card-difficulty">
+                    <label for="difficulty">7. Difficulty Balance:</label>
+                    <div class="stars" data-question="difficulty">
+                        <span data-value="1">&#9733;</span><span data-value="2">&#9733;</span><span data-value="3">&#9733;</span><span data-value="4">&#9733;</span><span data-value="5">&#9733;</span><span data-value="6">&#9733;</span><span data-value="7">&#9733;</span>
+                    </div>
+                </div>
+
+                <div class="question-card" id="card-comments">
+                    <label for="comments">Additional Comments:</label>
+                    <textarea id="comments" name="comments" rows="4" placeholder="Share more thoughts..."></textarea>
+                </div>
             </div>
 
-            <!-- Question 1 -->
-            <div class="question-card" data-question="1">
-                <h3>1. So, how did you enjoy the game overall?</h3>
-                <div class="rating-stars" data-question="q1">
-                    <span class="star" data-value="1">★</span>
-                    <span class="star" data-value="2">★</span>
-                    <span class="star" data-value="3">★</span>
-                    <span class="star" data-value="4">★</span>
-                    <span class="star" data-value="5">★</span>
-                </div>
-                <div class="rating-label">Click to rate</div>
-            </div>
-        
-            <!-- Question 2 -->
-            <div class="question-card" data-question="2">
-                <h3>2. How would you rate the storyline/narrative?</h3>
-                <div class="rating-stars" data-question="q2">
-                    <span class="star" data-value="1">★</span>
-                    <span class="star" data-value="2">★</span>
-                    <span class="star" data-value="3">★</span>
-                    <span class="star" data-value="4">★</span>
-                    <span class="star" data-value="5">★</span>
-                </div>
-                <div class="rating-label">Click to rate</div>
-            </div>
-        
-            <!-- Question 3 -->
-            <div class="question-card" data-question="3">
-                <h3>3. How satisfying were the gameplay mechanics?</h3>
-                <div class="rating-stars" data-question="q3">
-                    <span class="star" data-value="1">★</span>
-                    <span class="star" data-value="2">★</span>
-                    <span class="star" data-value="3">★</span>
-                    <span class="star" data-value="4">★</span>
-                    <span class="star" data-value="5">★</span>
-                </div>
-                <div class="rating-label">Click to rate</div>
-            </div>
-        
-            <!-- Question 4 -->
-            <div class="question-card" data-question="4">
-                <h3>4. How impressive were the graphics/visuals?</h3>
-                <div class="rating-stars" data-question="q4">
-                    <span class="star" data-value="1">★</span>
-                    <span class="star" data-value="2">★</span>
-                    <span class="star" data-value="3">★</span>
-                    <span class="star" data-value="4">★</span>
-                    <span class="star" data-value="5">★</span>
-                </div>
-                <div class="rating-label">Click to rate</div>
-            </div>
-        
-            <!-- Question 5 -->
-            <div class="question-card" data-question="5">
-                <h3>5. How much replay value does it have?</h3>
-                <div class="rating-stars" data-question="q5">
-                    <span class="star" data-value="1">★</span>
-                    <span class="star" data-value="2">★</span>
-                    <span class="star" data-value="3">★</span>
-                    <span class="star" data-value="4">★</span>
-                    <span class="star" data-value="5">★</span>
-                </div>
-                <div class="rating-label">Click to rate</div>
-            </div>
-        
-            <!-- Question 6 -->
-            <div class="question-card" data-question="6">
-                <h3>6. How good was the soundtrack/sound design?</h3>
-                <div class="rating-stars" data-question="q6">
-                    <span class="star" data-value="1">★</span>
-                    <span class="star" data-value="2">★</span>
-                    <span class="star" data-value="3">★</span>
-                    <span class="star" data-value="4">★</span>
-                    <span class="star" data-value="5">★</span>
-                </div>
-                <div class="rating-label">Click to rate</div>
-            </div>
-        
-            <!-- Question 7 -->
-            <div class="question-card" data-question="7">
-                <h3>7. How well-balanced was the difficulty?</h3>
-                <div class="rating-stars" data-question="q7">
-                    <span class="star" data-value="1">★</span>
-                    <span class="star" data-value="2">★</span>
-                    <span class="star" data-value="3">★</span>
-                    <span class="star" data-value="4">★</span>
-                    <span class="star" data-value="5">★</span>
-                </div>
-                <div class="rating-label">Click to rate</div>
-            </div>
-        
-            <!-- Additional Comments -->
-            <div class="question-card" data-question="8">
-                <h3>Any additional comments?</h3>
-                <textarea id="comments" rows="4" placeholder="Share your thoughts about the game..."></textarea>
-            </div>
-        
-            <div class="button-container">
-                <button type="submit" class="submit-btn">Submit Review <i class="fas fa-paper-plane"></i></button>
-            </div>
+            <button type="submit" id="submitReviewBtn" class="submit-btn"><i class="fas fa-paper-plane"></i> Submit Review</button>
         </form>
-    </div>
+    </main>
 
     <footer>
-        <p>© 2023 Game Recommender | <a href="#" class="footer-link">About</a> | <a href="#" class="footer-link">Contact</a></p>
+        <p>&copy; 2024 Game Reviewer. Connect with us!</p>
+        <div class="social-links">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
     </footer>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
     <script src="review.js"></script>
 </body>
 </html>

@@ -1,95 +1,108 @@
-// Game list - can be expanded or moved to a separate JSON file later
-const games = [
-    "The Witcher 3: Wild Hunt",
-    "Red Dead Redemption 2",
-    "Stardew Valley",
-    "Hollow Knight",
-    "Celeste",
-    "Portal 2",
-    "Disco Elysium",
-    "Hades",
-    "God of War (2018)",
-    "The Legend of Zelda: Breath of the Wild",
-    "Elden Ring",
-    "Minecraft",
-    "Undertale",
-    "Dark Souls III",
-    "Super Mario Odyssey",
-    "Final Fantasy VII Remake",
-    "Persona 5 Royal",
-    "Sekiro: Shadows Die Twice",
-    "Ghost of Tsushima",
-    "DOOM Eternal",
-    "Cyberpunk 2077",
-    "Gta 4",
-    "Gta Vice City",
-    "Gta San Andreas",
-];
+document.addEventListener('DOMContentLoaded', () => {
+    const recommendBtn = document.getElementById('recommendBtn');
+    const resultDiv = document.getElementById('result');
+    const gameTitleP = document.getElementById('gameTitle');
+    const reviewLinkA = document.getElementById('reviewLink');
+    const gameCountSpan = document.getElementById('count');
 
-// DOM elements
-const recommendButton = document.getElementById('recommendButton');
-const resultDiv = document.getElementById('result');
-const gameCountElement = document.getElementById('gameCount');
+    const games = [
+        "The Witcher 3: Wild Hunt",
+        "Red Dead Redemption 2",
+        "The Legend of Zelda: Breath of the Wild",
+        "Grand Theft Auto V",
+        "Minecraft",
+        "Dark Souls III",
+        "Overwatch",
+        "Fortnite",
+        "Among Us",
+        "Stardew Valley",
+        "Hades",
+        "Cyberpunk 2077",
+        "Animal Crossing: New Horizons",
+        "Super Mario Odyssey",
+        "God of War (2018)",
+        "Spider-Man (PS4)",
+        "Sekiro: Shadows Die Twice",
+        "Doom Eternal",
+        "Ghost of Tsushima",
+        "Elden Ring"
+    ];
 
-// Display game count
-gameCountElement.textContent = games.length;
+    let lastRecommendedGame = "";
 
-// Track last recommended game
-let lastRecommendedGame = null;
-let currentRecommendedGame = null; 
-
-// Initialize review link visibility
-document.getElementById('reviewLink').style.display = 'none';
-
-// Function to recommend a game
-function recommendGame() {
-    // Show result container if hidden
-    resultDiv.style.display = 'block';
-    
-    // Add fade-out effect
-    resultDiv.classList.add('fade-out');
-    
-    // Add button animation
-    recommendButton.classList.add('button-clicked');
-    setTimeout(() => {
-        recommendButton.classList.remove('button-clicked');
-    }, 300);
-    
-    setTimeout(() => {
-        let selectedGame;
-        let attempts = 0;
-        
-        // Ensure we get a different game than the last one
-        do {
-            const randomIndex = Math.floor(Math.random() * games.length);
-            selectedGame = games[randomIndex];
-            attempts++;
-            
-            // Safety check in case all games are the same
-            if (attempts > 100) break;
-        } while (selectedGame === lastRecommendedGame);
-
-        // Update last recommended game
-        lastRecommendedGame = selectedGame;
-        currentRecommendedGame = selectedGame; // Store the current recommendation
-
-        // Update display with animation
-        resultDiv.innerHTML = `<div class="result-animation">How about...</div><span class="game-title">${selectedGame}</span>`;
-        resultDiv.classList.remove('fade-out');
-
-        // Update review link
-        const reviewLink = document.getElementById('reviewLink');
-        reviewLink.href = `review.html?game=${encodeURIComponent(selectedGame)}`;
-        reviewLink.style.display = 'inline-block';
-    }, 300);
-}
-
-// Add event listener for keyboard navigation (press Enter to recommend)
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Enter' && !event.ctrlKey && !event.altKey) {
-        recommendGame();
+    // Display total game count
+    if (gameCountSpan) {
+        gameCountSpan.textContent = games.length;
     }
-});
 
-// Initialize with hidden result container
-resultDiv.style.display = 'none';
+    function recommendGame() {
+        if (resultDiv) resultDiv.style.display = 'block'; // Ensure resultDiv is visible
+
+        let randomIndex;
+        let recommendedGame = "";
+
+        // Ensure a new game is recommended if there's more than one game
+        if (games.length > 1) {
+            do {
+                randomIndex = Math.floor(Math.random() * games.length);
+                recommendedGame = games[randomIndex];
+            } while (recommendedGame === lastRecommendedGame);
+        } else if (games.length === 1) {
+            recommendedGame = games[0];
+        } else {
+            if (gameTitleP) gameTitleP.textContent = "No games available in the list!";
+            if (reviewLinkA) reviewLinkA.style.display = 'none';
+            return;
+        }
+        
+        lastRecommendedGame = recommendedGame;
+
+        // Fade out, change text, fade in
+        if (resultDiv) {
+            resultDiv.style.opacity = 0;
+        }
+
+        setTimeout(() => {
+            if (gameTitleP) gameTitleP.textContent = recommendedGame;
+            if (reviewLinkA) {
+                reviewLinkA.href = `review.html?game=${encodeURIComponent(recommendedGame)}`;
+                reviewLinkA.style.display = 'inline-block'; // Ensure link is visible
+            }
+            if (resultDiv) {
+                resultDiv.style.opacity = 1;
+            }
+        }, 300); // Match this duration with CSS transition if any
+
+        // Button animation
+        if (recommendBtn) {
+            recommendBtn.classList.add('button-active-animation');
+            setTimeout(() => {
+                recommendBtn.classList.remove('button-active-animation');
+            }, 500); // Duration of animation
+        }
+    }
+
+    if (recommendBtn) {
+        recommendBtn.addEventListener('click', recommendGame);
+        // Add Enter key functionality for the button
+        recommendBtn.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                recommendGame();
+            }
+        });
+    }
+
+    // Style for button animation (can also be in CSS)
+    const style = document.createElement('style');
+    style.textContent = `
+        .button-active-animation {
+            animation: button-pop 0.5s ease-out;
+        }
+        @keyframes button-pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    `;
+    document.head.appendChild(style);
+});

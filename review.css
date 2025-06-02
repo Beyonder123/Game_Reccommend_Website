@@ -1,309 +1,260 @@
-body{
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    min-height: 100vh;
+    background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+    color: #333;
+    line-height: 1.6;
     display: flex;
     flex-direction: column;
-    /* Fallback solid color */
-    background: #121212;
-    
-    background: linear-gradient(
-        135deg,
-        #1e0036 0%,
-        #3c0464 25%,
-        #5e0a9c 50%,
-        #8a2be2 75%,
-        #ba55d3 100%
-    );
-
-    background-size: 300% 300%;
-    animation: gradientShift 12s ease infinite;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: white;
-}
-
-@keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
 header {
-    text-align: center;
-    padding: 1.5rem 1rem;
-    background-color: rgba(0, 0, 0, 0.3);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    position: relative;
-}
-
-.back-button {
-    position: absolute;
-    left: 1.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: white;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    padding: 0.5rem 1rem;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    transition: all 0.3s ease;
-}
-
-.back-button:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-50%) scale(1.05);
-}
-
-.back-button i {
-    margin-right: 0.5rem;
-}
-
-h1 {
+    background: rgba(0, 0, 0, 0.8);
     color: #fff;
+    padding: 1rem 2rem;
     text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
     margin: 0;
-    font-size: 2.2rem;
+    font-size: 2.2em;
 }
 
-.review-container {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: rgba(20, 20, 40, 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+header nav a {
+    color: #fff;
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: 1em;
+    transition: color 0.3s ease;
+}
+
+header nav a:hover {
+    color: #89f7fe;
+}
+
+#backBtn {
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+#backBtn:hover {
+    background: #ff4757;
+}
+
+main {
     flex: 1;
+    padding: 20px;
+    max-width: 800px;
+    margin: 20px auto;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
-.progress-bar {
-    height: 6px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 3px;
-    margin-bottom: 2rem;
-    position: relative;
+.progress-container {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 25px;
+    margin-bottom: 25px;
+    height: 20px;
     overflow: hidden;
 }
 
-.progress-indicator {
-    position: absolute;
-    top: 0;
-    left: 0;
+.progress-bar {
     height: 100%;
-    background: linear-gradient(to right, #6c5ce7, #a29bfe);
-    width: 0%;
-    transition: width 0.3s ease;
-    border-radius: 3px;
+    width: 0%; /* Initial width */
+    background-color: #4caf50;
+    border-radius: 25px;
+    text-align: center;
+    line-height: 20px; /* Same as height */
+    color: white;
+    font-weight: bold;
+    transition: width 0.4s ease;
+}
+
+#gameToReview {
+    text-align: center;
+    color: #333;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+}
+
+#gameToReview span {
+    color: #66a6ff;
+    font-weight: bold;
+}
+
+.review-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
 }
 
 .question-card {
-    background: rgba(255,255,255,0.05);
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
+    background: #f9f9f9;
+    padding: 20px;
     border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .question-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
 }
 
-.question-card h3 {
-    color: #fff;
-    margin-top: 0;
-    margin-bottom: 1rem;
-    font-size: 1.2rem;
-    line-height: 1.4;
-    font-weight: 500;
+.question-card.unanswered {
+    border: 2px solid #ff6b6b; /* Highlight unanswered */
+    animation: shake 0.5s;
 }
 
-.rating-stars {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: center;
+.question-card.rated {
+    border: 2px solid #4caf50; /* Highlight rated */
 }
 
-.star {
-    font-size: 2.2rem;
-    color: #4a4a4a;
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.question-card label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #555;
+}
+
+.stars span {
+    font-size: 2em;
     cursor: pointer;
-    transition: color 0.3s ease, transform 0.2s ease;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    color: #ddd; /* Default star color */
+    transition: color 0.2s ease, transform 0.2s ease;
+    margin-right: 5px;
 }
 
-.star:hover,
-.star.active {
-    color: #ffd700;
+.stars span:hover,
+.stars span.active {
+    color: #ffc107; /* Gold for active/hover */
     transform: scale(1.2);
 }
 
-.rating-label {
-    text-align: center;
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.6);
-    transition: opacity 0.3s ease;
-}
-
-.rating-stars:hover + .rating-label,
-.rating-stars:has(.active) + .rating-label {
-    opacity: 0;
-}
-
-.button-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 2rem;
+textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+    font-size: 1em;
+    min-height: 80px;
+    resize: vertical;
 }
 
 .submit-btn {
-    padding: 1rem 2rem;
-    background: #6c5ce7;
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #5cb85c;
     color: white;
     border: none;
-    border-radius: 8px;
-    font-size: 1.2rem;
+    border-radius: 5px;
+    font-size: 1.2em;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    margin-top: 30px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .submit-btn:hover {
-    background: #8577ef;
+    background-color: #4cae4c;
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
-.submit-btn:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+.submit-btn.success-animation {
+    animation: success-pop 0.5s ease-out;
 }
 
-.submit-btn i {
-    margin-left: 0.5rem;
-}
-
-textarea {
-    width: 100%;
-    padding: 1rem;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 8px;
-    color: white;
-    font-size: 1rem;
-    resize: vertical;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    font-family: inherit;
-}
-
-textarea:focus {
-    outline: none;
-    border-color: #6c5ce7;
-    box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.3);
+@keyframes success-pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); background-color: #4CAF50; }
+    100% { transform: scale(1); }
 }
 
 footer {
+    background: rgba(0, 0, 0, 0.8);
+    color: #ccc;
     text-align: center;
-    padding: 1.5rem;
-    background-color: rgba(0, 0, 0, 0.4);
-    font-size: 0.9rem;
-    margin-top: auto;
+    padding: 1rem 0;
+    font-size: 0.9em;
+    margin-top: auto; /* Pushes footer to bottom */
 }
 
-.footer-link {
-    color: #ff4757;
-    text-decoration: none;
-    transition: color 0.3s;
+.social-links a {
+    color: #ccc;
+    margin: 0 10px;
+    font-size: 1.4em;
+    transition: color 0.3s ease;
 }
 
-.footer-link:hover {
-    color: #ff6b81;
-    text-decoration: underline;
+.social-links a:hover {
+    color: #fff;
 }
 
-#gameTitle {
-    color: #ffd700;
-    font-weight: bold;
-    word-break: break-word;
-}
-
+/* Responsive Design */
 @media (max-width: 768px) {
-    .review-container {
-        margin: 1.5rem 1rem;
-        padding: 1.5rem;
+    header {
+        flex-direction: column;
+        padding: 1rem;
     }
-    
-    h1 {
-        font-size: 1.8rem;
+    header h1 {
+        font-size: 1.8em;
+        margin-bottom: 10px;
     }
-    
-    .back-button {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.9rem;
+    header nav {
+        margin-bottom: 10px;
     }
-    
-    .question-card {
-        padding: 1.2rem;
+    #backBtn {
+        margin-top: 10px;
     }
-    
-    .question-card h3 {
-        font-size: 1.1rem;
+    main {
+        margin: 10px;
+        padding: 15px;
     }
-    
-    .star {
-        font-size: 1.8rem;
-    }
-    
-    .submit-btn {
-        font-size: 1.1rem;
-        padding: 0.8rem 1.6rem;
+    .stars span {
+        font-size: 1.8em;
     }
 }
 
 @media (max-width: 480px) {
-    header {
-        padding: 1.2rem 1rem;
+    header h1 {
+        font-size: 1.6em;
     }
-    
-    h1 {
-        font-size: 1.5rem;
+    header nav a {
+        font-size: 0.9em;
     }
-    
-    .back-button {
-        left: 1rem;
-        padding: 0.3rem 0.6rem;
-        font-size: 0.8rem;
+    #gameToReview {
+        font-size: 1.5em;
     }
-    
-    .review-container {
-        padding: 1rem;
-        margin: 1rem;
-    }
-    
     .question-card {
-        padding: 1rem;
-        margin-bottom: 1rem;
+        padding: 15px;
     }
-    
-    .question-card h3 {
-        font-size: 1rem;
+    .stars span {
+        font-size: 1.5em;
     }
-    
-    .star {
-        font-size: 1.6rem;
-    }
-    
     .submit-btn {
-        font-size: 1rem;
-        padding: 0.7rem 1.4rem;
+        font-size: 1.1em;
     }
 }
