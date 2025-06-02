@@ -80,10 +80,6 @@ body {
     color: var(--text-secondary);
 }
 
-.contact-me-header .nav-link {
-    /* Specific styling if different, otherwise inherits .nav-link */
-}
-
 /* Hero Section */
 .hero-section {
     display: flex;
