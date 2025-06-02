@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Get random game recommendations and share your reviews.">
+    <meta name="keywords" content="game, recommendation, review, random game, game suggestions">
+    <title>Game Recommender</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1>Game Recommender</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="review.html">Review a Game</a>
+            <a href="index.html">My Portfolio</a> 
+        </nav>
+    </header>
+
+    <main>
+        <section id="recommender">
+            <h2>Looking for a new game?</h2>
+            <p>Click the button below to get a random game recommendation!</p>
+            <button id="recommendBtn" class="recommend-btn"><i class="fas fa-dice"></i> Recommend Me a Game!</button>
+            <div id="gameCount">Games available: <span id="count">0</span></div>
+            <div id="result" class="result-container" style="display: none;">
+                <h3>We recommend:</h3>
+                <p id="gameTitle"></p>
+                <a id="reviewLink" href="#" target="_blank">Review this game!</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Game Recommender. All rights reserved.</p>
+        <div class="social-links">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
